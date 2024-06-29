@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 from .models import Community, Comment
-from django.contrib.auth.models import User
+from accounts.models import CustomUser  
 
 class CommunitySerializer(ModelSerializer):
     writer = serializers.ReadOnlyField(source = 'writer.username') 

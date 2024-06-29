@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from accounts.models import CustomUser  
 
 class Place(models.Model):
     location = models.CharField(verbose_name="위치", max_length=128)
@@ -15,7 +15,7 @@ class Place(models.Model):
     image1 = models.ImageField(verbose_name="이미지1", blank=True, null=True, upload_to='place_image')
     image2 = models.ImageField(verbose_name="이미지2", blank=True, null=True, upload_to='place_image')
     image3 = models.ImageField(verbose_name="이미지3", blank=True, null=True, upload_to='place_image')
-    writer = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    writer = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
     
     def __str__(self):
         return self.location
@@ -28,7 +28,7 @@ class Restaurant(models.Model):
     image1 = models.ImageField(verbose_name="이미지1", blank=True, null=True, upload_to='place_image')
     image2 = models.ImageField(verbose_name="이미지2", blank=True, null=True, upload_to='place_image')
     image3 = models.ImageField(verbose_name="이미지3", blank=True, null=True, upload_to='place_image')
-    added_by = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    added_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.name
