@@ -4,13 +4,15 @@ from accounts.models import CustomUser
 from rest_framework import serializers
 
 class PlaceSerializer(ModelSerializer):
-    writer = serializers.ReadOnlyField(source = 'writer.username')
+    userid = serializers.ReadOnlyField(source = 'user.username')
     
     class Meta:
         model = Place
         fields = ['id', 'location', 'pName', 'purpose', 'sTime', 'eTime',
-                  'basic_cate', 'detail_cate', 'require', 'link', 'thumbnail',
-                  'image1', 'image2', 'image3', 'writer']
+                  'basic_cate', 'detail_cate', 'require', 'link', 'image', 'userid']
+        # fields = ['id', 'location', 'pName', 'purpose', 'sTime', 'eTime',
+        #           'basic_cate', 'detail_cate', 'require', 'link', 'thumbnail',
+        #           'image1', 'image2', 'image3', 'userid']
         
 class RestaurantSerializer(ModelSerializer):
     added_by = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())

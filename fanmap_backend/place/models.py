@@ -11,11 +11,12 @@ class Place(models.Model):
     detail_cate = models.CharField(verbose_name="세부카테고리", max_length=200)
     require = models.CharField(verbose_name="필요조건", max_length=300, blank=True, null=True)
     link = models.URLField(verbose_name="링크", blank=True, null=True)
-    thumbnail = models.ImageField(verbose_name="대표이미지", blank=True, null=True, upload_to='place_image')
-    image1 = models.ImageField(verbose_name="이미지1", blank=True, null=True, upload_to='place_image')
-    image2 = models.ImageField(verbose_name="이미지2", blank=True, null=True, upload_to='place_image')
-    image3 = models.ImageField(verbose_name="이미지3", blank=True, null=True, upload_to='place_image')
-    writer = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
+    image = models.ImageField(verbose_name="이미지", blank=True, null=True, upload_to='place_image')
+    # thumbnail = models.ImageField(verbose_name="대표이미지", blank=True, null=True, upload_to='place_image')
+    # image1 = models.ImageField(verbose_name="이미지1", blank=True, null=True, upload_to='place_image')
+    # image2 = models.ImageField(verbose_name="이미지2", blank=True, null=True, upload_to='place_image')
+    # image3 = models.ImageField(verbose_name="이미지3", blank=True, null=True, upload_to='place_image')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
     
     def __str__(self):
         return self.location

@@ -4,15 +4,17 @@ from .models import Community, Comment
 from accounts.models import CustomUser  
 
 class CommunitySerializer(ModelSerializer):
-    writer = serializers.ReadOnlyField(source = 'writer.username') 
+    userid = serializers.ReadOnlyField(source = 'user.username') 
+    nickname = serializers.ReadOnlyField(source = 'user.nickname')
     
     class Meta:
         model = Community
-        fields = ['id', 'title', 'content', 'created_at', 'image', 'video', 'link', 'location', 'writer']
+        fields = ['id', 'title', 'content', 'created_at', 'image', 'video', 'link', 'location', 'userid', 'nickname']
     
 class CommentSerializer(ModelSerializer):
-    writer = serializers.ReadOnlyField(source = 'writer.username') 
+    userid = serializers.ReadOnlyField(source = 'user.username') 
+    nickname = serializers.ReadOnlyField(source = 'user.nickname')
     
     class Meta:
         model = Comment
-        fields = ['id', 'comment', 'date', 'post', 'writer']
+        fields = ['id', 'comment', 'date', 'post', 'userid', 'nickname']
