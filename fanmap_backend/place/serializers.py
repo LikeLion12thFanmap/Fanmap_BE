@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 from .models import Place,Restaurant
-from django.contrib.auth.models import User
+from accounts.models import CustomUser 
 from rest_framework import serializers
 
 class PlaceSerializer(ModelSerializer):
@@ -13,7 +13,7 @@ class PlaceSerializer(ModelSerializer):
                   'image1', 'image2', 'image3', 'writer']
         
 class RestaurantSerializer(ModelSerializer):
-    added_by = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    added_by = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
     
     class Meta:
         model = Restaurant

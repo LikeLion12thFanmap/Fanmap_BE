@@ -1,14 +1,10 @@
-# postboxProject/ accounts/ urls.py 
-
-from django.urls import path, include
-from rest_framework.routers import SimpleRouter
-from . import views
-
-user_router = SimpleRouter()
-user_router.register('account',views.UserViewSet)
+from django.urls import path
+from .views import RegisterStepOne, RegisterStepTwo, CustomAuthToken, ProfileUpdateView
 
 urlpatterns = [
-    path('',include(user_router.urls)),
-    path('auth/', include('rest_framework.urls')),
-    path('rest-auth/', include('dj_rest_auth.urls')), # 추가 (* migrate도 해주세요!)
+    path('register/step1/', RegisterStepOne.as_view(), name='register_step_one'),
+    path('register/step2/', RegisterStepTwo.as_view(), name='register_step_two'),
+    path('login/', CustomAuthToken.as_view(), name='login'),
+    path('profile/update/', ProfileUpdateView.as_view(), name='profile_update'),
 ]
+
