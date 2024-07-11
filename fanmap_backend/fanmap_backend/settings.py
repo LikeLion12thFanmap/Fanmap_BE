@@ -28,8 +28,21 @@ SECRET_KEY = 'django-insecure-i7ce+ckr5@7#0$dk_ht9njeht3mtu#77m!_5=5k&vzpaogj!o#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+CSRF_COOKIE_NAME = 'csrftoken'
+
+# Session settings
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Database-based session storage
+SESSION_COOKIE_NAME = 'sessionid'  # Session cookie name
+SESSION_COOKIE_HTTPONLY = True  # Ensure session cookies are HTTP only
+SESSION_SAVE_EVERY_REQUEST = True  # Save session on every request
+
+# CORS settings (if applicable)
+CORS_ALLOW_CREDENTIALS = True  # Required for using sessions with CORS
+
+# CORS origin settings (allowing all origins during development)
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
@@ -164,7 +177,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -177,3 +190,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
+
+SESSION_COOKIE_AGE = 3600 

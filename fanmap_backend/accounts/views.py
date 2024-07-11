@@ -14,19 +14,17 @@ class RegisterStepOne(APIView):
         serializer = UserBasicInfoSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
-            request.session['user_id'] = user.id # 세션에 사용자 ID 저장
-            return Response({"user_id": user.id, "message": "Step 1 completed. Proceed to step 2."}, status=status.HTTP_201_CREATED)
+            return Response({"message": "Step 1 completed. Proceed to step 2."}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class RegisterStepTwo(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
-        user_id = request.session.get('user_id') # 세션에서 사용자 ID 가져오기
-        
+        user_id = request.data.get('user_id')  # 프론트에서 전달받은 user_id
         if not user_id:
-            return Response({"error": "No user ID found in session. Please complete step 1 first."}, status=status.HTTP_400_BAD_REQUEST)
-       
+            return Response({"error": "No user ID provided."}, status=status.HTTP_400_BAD_REQUEST)
+        
         # Step 1에서 저장한 사용자 ID로 사용자 조회
         try:
             user = CustomUser.objects.get(id=user_id)
@@ -36,9 +34,7 @@ class RegisterStepTwo(APIView):
         serializer = UserAdditionalInfoSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
-            del request.session['user_id']  # Clear user ID from session
-            token, created = Token.objects.get_or_create(user=user) # 세션에서 사용자 ID 삭제
-            return Response({'token': token.key, 'user': serializer.data}, status=status.HTTP_200_OK)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CustomAuthToken(ObtainAuthToken):
