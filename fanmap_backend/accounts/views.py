@@ -15,7 +15,7 @@ class RegisterStepOne(APIView):
         if serializer.is_valid():
             user = serializer.save()
             request.session['user_id'] = user.id # 세션에 사용자 ID 저장
-            return Response({"message": "Step 1 completed. Proceed to step 2."}, status=status.HTTP_201_CREATED)
+            return Response({"user_id": user.id, "message": "Step 1 completed. Proceed to step 2."}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class RegisterStepTwo(APIView):
