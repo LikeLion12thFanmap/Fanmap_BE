@@ -51,10 +51,14 @@ INSTALLED_APPS = [
 
     'community',
     'place',
+    
+    'corsheaders',
 ]
 SITE_ID = 1 
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', 
+	'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -65,11 +69,33 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware', 
 ]
 
+# 방법 1 -> 모든 호스트 허용하기 
+CORS_ORIGIN_ALLOW_ALL = True 
+
+CORS_ALLOW_METHODS = [
+	'DELETE',
+	'GET',
+	'OPTIONS',
+	'PATCH',
+	'POST',
+	'PUT',
+]
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
+    # CamelCaseJSON 관련 설정
+	'DEFAULT_RENDERER_CLASSES': (
+	'djangorestframework_camel_case.render.CamelCaseJSONRenderer', 
+	'djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer',
+	),
+	'DEFAULT_PARSER_CLASSES': (
+	'djangorestframework_camel_case.parser.CamelCaseFormParser', 
+	'djangorestframework_camel_case.parser.CamelCaseMultiPartParser',
+	'djangorestframework_camel_case.parser.CamelCaseJSONParser',
+	),
 }
 
 ROOT_URLCONF = 'fanmap_backend.urls'

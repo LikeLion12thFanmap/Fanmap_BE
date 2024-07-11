@@ -11,7 +11,7 @@ class PlaceViewSet(ModelViewSet):
     serializer_class = PlaceSerializer
     
     def perform_create(self, serializer):
-        serializer.save(writer = self.request.user)
+        serializer.save(user = self.request.user)
 
 class RestaurantViewSet(ModelViewSet):
     queryset = Restaurant.objects.all()
